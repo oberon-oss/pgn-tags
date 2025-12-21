@@ -1,8 +1,8 @@
 package eu.oberon.oss.chess.pgn.tags;
 
+import jakarta.annotation.Nonnull;
 import lombok.extern.log4j.Log4j2;
 
-import javax.annotation.Nonnull;
 
 /**
  * Default implementation of the {@link TagCreator}{@code <I,O>} interface.
@@ -34,7 +34,7 @@ public class DefaultTagCreator<I, O> implements TagCreator<I, O> {
     }
 
     @Override
-    public PgnTag<O> createTag(I inputValue) {
+    public @Nonnull PgnTag<O> createTag(I inputValue) {
         return new PgnTag<>() {
             private final O tagValue = tagValueHandler.getConverter().apply(inputValue);
 

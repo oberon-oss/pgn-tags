@@ -2,6 +2,8 @@ package eu.oberon.oss.chess.pgn.tags;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Function;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DefaultTagCreatorTest {
@@ -9,19 +11,20 @@ class DefaultTagCreatorTest {
 
     @Test
     void testInvalidTagNames() {
-        String msg ="Parameter: tagName";
-        
+        String msg = "Parameter: tagName";
+
         TagValueHandler<String, String> handler = TagValueHandler.getDefaultHandler();
+        //noinspection DataFlowIssue - Provoke a NPE intentinonally
         assertThrows(NullPointerException.class, () -> new DefaultTagCreator<>(null, handler, true));
 
         IllegalArgumentException e;
-        
+
         e = assertThrows(IllegalArgumentException.class, () -> new DefaultTagCreator<>("", handler, true));
-        assertEquals(msg,e.getMessage());
-        
+        assertEquals(msg, e.getMessage());
+
         e = assertThrows(IllegalArgumentException.class, () -> new DefaultTagCreator<>("     ", handler, true));
-        assertEquals(msg,e.getMessage());
-        }
+        assertEquals(msg, e.getMessage());
+    }
 
     @Test
     void testInvalidTagValues() {
@@ -32,17 +35,17 @@ class DefaultTagCreatorTest {
         assertThrows(IllegalArgumentException.class, () -> creator.createTag(""));
         assertThrows(IllegalArgumentException.class, () -> creator.createTag("     "));
     }
-    
+
     @Test
     void testTagWithObjectPayload() {
-        var handler = TagValueHandler.getInstance((TagValueConverter<Object, Object>) Object::toString);
+        var handler = TagValueHandler.getInstance((Function<Object, Object>) Object::toString);
         Object test = new Object();
         String toString = test.toString();
-        
+
         assertTrue(handler.getValidator().test(test));
-        assertEquals(toString,handler.getConverter().apply(test));
+        assertEquals(toString, handler.getConverter().apply(test));
     }
-    
+
     @Test
     void testRequiredTagCreator() {
         DefaultTagCreator<String, String> creator = new DefaultTagCreator<>(
@@ -60,10 +63,7 @@ class DefaultTagCreatorTest {
     @Test
     void testNonRequiredTagCreator() {
         DefaultTagCreator<String, Integer> creator = new DefaultTagCreator<>("OPTIONAL",
-                TagValueHandler.getInstance(
-                        (TagValueValidator<String>) s -> true,
-                        (TagValueConverter<String, Integer>) s -> 1234
-                ), false
+                TagValueHandler.getInstance(_ -> true, _ -> 1234), false
         );
 
         PgnTag<Integer> tag = creator.createTag("value");

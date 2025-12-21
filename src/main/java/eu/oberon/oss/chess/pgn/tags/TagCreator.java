@@ -1,6 +1,6 @@
 package eu.oberon.oss.chess.pgn.tags;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Allows the creation of specific tags.
@@ -19,7 +19,8 @@ public interface TagCreator<I, O> {
      *
      * @since 1.0.0
      */
-    @Nonnull String getTagName();
+    @Nonnull
+    String getTagName();
 
     /**
      * Creates a tag for the provided input value.

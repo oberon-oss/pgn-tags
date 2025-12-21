@@ -61,11 +61,8 @@ class TagCreatorRegistryTest {
 
     @Test
     void testReplaceExistingTagCreator() {
-        assertTrue(registry.replaceTagCreator(new DefaultTagCreator<>("Round",
-                TagValueHandler.getInstance(
-                        (TagValueValidator<String>) s -> Pattern.matches("\\d+", s),
-                        (TagValueConverter<String, Integer>) Integer::parseInt
-                ), true))
+        assertTrue(registry.replaceTagCreator(new DefaultTagCreator<String, Integer>("Round",
+                TagValueHandler.getInstance(s -> Pattern.matches("\\d+", s), Integer::parseInt), true))
         );
 
         TagCreator<String, Integer> creator = registry.getInstance("Round");
@@ -78,10 +75,10 @@ class TagCreatorRegistryTest {
 
     @Test
     void testReplaceNonExistentTagCreator() {
-        assertFalse(registry.replaceTagCreator(new DefaultTagCreator<>("This-does-not-exist",
+        assertFalse(registry.replaceTagCreator(new DefaultTagCreator<String, Integer>("This-does-not-exist",
                 TagValueHandler.getInstance(
-                        (TagValueValidator<String>) s -> Pattern.matches("\\d+", s),
-                        (TagValueConverter<String, Integer>) Integer::parseInt
+                        s -> Pattern.matches("\\d+", s),
+                        Integer::parseInt
                 ), true))
         );
     }

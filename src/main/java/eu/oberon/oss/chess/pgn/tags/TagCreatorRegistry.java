@@ -1,9 +1,9 @@
 package eu.oberon.oss.chess.pgn.tags;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import lombok.extern.log4j.Log4j2;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +11,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static eu.oberon.oss.chess.pgn.tags.TagValueHandler.getDefaultHandler;
 
+/**
+ * A registry for PGN Tag creators.
+ */
 @Log4j2
 public class TagCreatorRegistry {
 
@@ -70,7 +73,7 @@ public class TagCreatorRegistry {
             throw new IllegalStateException("A tag creator already exists for tag name '" + tagCreator.getTagName() + "'");
         }
         tagCreatorMap.put(tagCreator.getTagName().toLowerCase(), tagCreator);
-        LOGGER.info("Registered tag creator for tag '{}'", tagCreator.getTagName());
+        LOGGER.debug("Registered tag creator for tag '{}'", tagCreator.getTagName());
     }
 
     /**
@@ -126,10 +129,7 @@ public class TagCreatorRegistry {
      */
     public static TagCreatorRegistry getDefaultInstance(Set<String> tagNames, boolean areRequired) {
         TagCreatorRegistry registry = new TagCreatorRegistry();
-        for (String name : tagNames) {
-            registry.registerTagCreator(new DefaultTagCreator<>(name, getDefaultHandler(), areRequired));
-        }
-
+        registry.addDefaultCreators(tagNames, areRequired);
         return registry;
     }
 

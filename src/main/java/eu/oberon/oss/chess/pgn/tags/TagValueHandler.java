@@ -1,11 +1,12 @@
 package eu.oberon.oss.chess.pgn.tags;
 
+import jakarta.annotation.Nonnull;
 import lombok.Getter;
 
-import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
 
 /**
  * Generic class for handling PGN Tag values.
@@ -18,10 +19,10 @@ import java.util.function.Predicate;
 @SuppressWarnings("JavadocDeclaration")
 @Getter
 public final class TagValueHandler<I, O> {
-    private static final TagValueValidator<String> STRING_VALIDATOR = s -> s != null && !s.isBlank();
-    private static final TagValueValidator<Object> OBJECT_VALIDATOR = Objects::nonNull;
+    private static final Predicate<String> STRING_VALIDATOR = s -> s != null && !s.isBlank();
+    private static final Predicate<Object> OBJECT_VALIDATOR = Objects::nonNull;
 
-    private static final TagValueConverter<String, String> _CONVERTER = s -> {
+    private static final UnaryOperator<String> _CONVERTER = s -> {
         if (!STRING_VALIDATOR.test(s)) {
             throw new IllegalArgumentException("Value cannot be <null>, empty or white-space only.");
         }
