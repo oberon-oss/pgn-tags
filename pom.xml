@@ -16,6 +16,7 @@
 
     <properties>
         <argLine/>
+        <sonar.organization>oberon-oss-eu</sonar.organization>
     </properties>
 
     <dependencies>
@@ -49,5 +50,5 @@
             </plugin>
         </plugins>
     </build>
-  
+
 </project>
