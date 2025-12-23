@@ -35,7 +35,7 @@ jobs:
                     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
                 run: |
                     if [ "${{ github.event_name }}" = "pull_request" ]; then
-                      mvn  -B verify -P coverage,antlr-generator org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+                      mvn  -B verify -P coverage org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
                       -Dsonar.projectKey=oberon-oss_pgn-tags \
                       -Dsonar.organization=oberon-oss-eu \
                       -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
