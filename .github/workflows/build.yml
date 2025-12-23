@@ -42,7 +42,7 @@ jobs:
                       -Dsonar.pullrequest.branch=${{ github.head_ref }} \
                       -Dsonar.pullrequest.base=${{ github.base_ref }}
                     else
-                      mvn -B verify -P coverage,antlr-generator org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+                      mvn -B verify -P coverage org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
                       -Dsonar.projectKey=oberon-oss_pgn-tags \
                       -Dsonar.organization=oberon-oss-eu
                     fi
