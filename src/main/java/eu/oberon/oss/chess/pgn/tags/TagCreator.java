@@ -29,7 +29,9 @@ public interface TagCreator<I, O> {
      *
      * @return The created tag.
      *
+     * @throws IllegalArgumentException if the specified 'inputValue' is not acceptable.
      * @since 1.0.0
      */
-    @Nonnull PgnTag<O> createTag(I inputValue);
+    @Nonnull
+    PgnTag<O> createTag(I inputValue);
 }

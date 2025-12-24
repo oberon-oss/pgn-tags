@@ -1,5 +1,6 @@
 package eu.oberon.oss.chess.pgn.tags;
 
+import eu.oberon.oss.chess.pgn.tags.creators.TagCreatorStringValue;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import lombok.extern.log4j.Log4j2;
@@ -9,13 +10,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static eu.oberon.oss.chess.pgn.tags.TagValueHandler.getDefaultHandler;
-
 /**
  * A registry for PGN Tag creators.
  */
 @Log4j2
-public class TagCreatorRegistry {
+public class CreatorRegistry {
 
     private final Map<String, TagCreator<?, ?>> tagCreatorMap = new ConcurrentHashMap<>();
 
@@ -117,7 +116,7 @@ public class TagCreatorRegistry {
     }
 
     /**
-     * Creates a {@link DefaultTagCreator}{@code <String,String>} for all tag names specified in the provided set of
+     * Creates a {@link TagCreatorImpl}{@code <String,String>} for all tag names specified in the provided set of
      * names.
      *
      * @param tagNames    A set of 0 or more tag names for which to create a default tag creator.
@@ -127,14 +126,14 @@ public class TagCreatorRegistry {
      *
      * @since 1.0.0
      */
-    public static TagCreatorRegistry getDefaultInstance(Set<String> tagNames, boolean areRequired) {
-        TagCreatorRegistry registry = new TagCreatorRegistry();
+    public static CreatorRegistry getDefaultInstance(Set<String> tagNames, boolean areRequired) {
+        CreatorRegistry registry = new CreatorRegistry();
         registry.addDefaultCreators(tagNames, areRequired);
         return registry;
     }
 
     /**
-     * Adds 0 or more {@link DefaultTagCreator}{@code <String,String>} for all tag names specified in the provided set
+     * Adds 0 or more {@link TagCreatorImpl}{@code <String,String>} for all tag names specified in the provided set
      * of names.
      *
      * @param tagNames    A set of 0 or more tag names for which to create a default tag creator.
@@ -144,7 +143,7 @@ public class TagCreatorRegistry {
      */
     public void addDefaultCreators(Set<String> tagNames, boolean areRequired) {
         for (String name : tagNames) {
-            registerTagCreator(new DefaultTagCreator<>(name, getDefaultHandler(), areRequired));
+            registerTagCreator(TagCreatorStringValue.getInstance(name, false, areRequired));
         }
     }
 }

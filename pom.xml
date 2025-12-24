@@ -20,10 +20,22 @@
     </properties>
 
     <dependencies>
+        <!-- CVE related dependency overrides -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.5.19</version>
+        </dependency>
+        <!-- END of CVE rleated dependency overrides -->
+        
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
             <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.hakky54</groupId>
+            <artifactId>logcaptor</artifactId>
         </dependency>
     </dependencies>
 
