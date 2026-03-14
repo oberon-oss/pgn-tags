@@ -7,7 +7,7 @@
     <parent>
         <groupId>eu.oberon.oss</groupId>
         <artifactId>boms</artifactId>
-        <version>1.25.1</version>
+        <version>1.25.4</version>
     </parent>
 
     <groupId>eu.oberon.oss.chess</groupId>
@@ -24,7 +24,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>1.5.19</version>
+            <version>1.5.32</version>
         </dependency>
         <!-- END of CVE rleated dependency overrides -->
         
